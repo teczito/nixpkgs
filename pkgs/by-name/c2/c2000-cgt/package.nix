@@ -24,12 +24,13 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p /build/
-    cp -a $src /build/installer.bin
+    mkdir -p $TMPDIR
+    mkdir -p $out
+    cp -a $src $TMPDIR/installer.bin
 
-    chmod +x /build/installer.bin
-    ${fhs}/bin/fhs-shell -c '/build/installer.bin --mode unattended --prefix /build/ti'
-    mv /build/ti/ti-cgt-c2000_${finalAttrs.version} $out
+    chmod +x $TMPDIR/installer.bin
+    ${fhs}/bin/fhs-shell -c '$TMPDIR/installer.bin --mode unattended --prefix $TMPDIR/ti'
+    mv $TMPDIR/ti/ti-cgt-c2000_${finalAttrs.version} $out
 
     runHook postInstall
   '';
