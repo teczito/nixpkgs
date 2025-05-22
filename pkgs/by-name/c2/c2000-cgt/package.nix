@@ -24,7 +24,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $TMPDIR
+    export HOME=$TMPDIR/home
+    mkdir -p $HOME
     mkdir -p $out
     cp -a $src $TMPDIR/installer.bin
 
